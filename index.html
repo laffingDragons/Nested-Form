@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Document</title>
+</head>
+
+<style>
+    .parentForm {
+        border: none;
+        border-bottom: solid 3px green;
+        width: 85%;
+        display: inline;
+    }
+    
+    .childForm {
+        border: none;
+        border-bottom: solid 3px yellowgreen;
+        width: 50%;
+        display: inline;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <button id="onClickParentBtn" class="btn btn-lg btn-success">Add</button> <br> <br> <br>
+            <form id="form" action="">
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    var parentCount = 1;
+    var childCount = 0;
+
+    $(document).ready(function() {
+        increaseInput();
+    });
+
+    $('#onClickParentBtn').click(function() {
+        parentCount++;
+        console.log(">>>>> On clikc", parentCount);
+        increaseInput();
+    })
+
+    // $('.removeParent').click(function() {
+    //     console.log(">>>>> RRRROn clikc");
+    // })
+    function removeParent(id) {
+        $(`#div${id}`).remove()
+    }
+
+    function addChild(id) {
+        childCount++;
+        increaseChild(id);
+    }
+
+
+
+    function increaseInput() {
+        // for (i = 0; i < parentCount; i++) {
+        $('#form').append(`
+            <div id='div${parentCount}'>
+            <input type='text' class='form-control parentForm' id='parentInput-${parentCount}'>&nbsp; 
+            <span class="glyphicon glyphicon-minus removeParent" onclick=removeParent(${parentCount}) id='parentRemove-${parentCount}'></span>&nbsp;&nbsp;&nbsp; 
+            <span class="glyphicon glyphicon-plus" onclick=addChild(${parentCount}) id='parentAdd-${parentCount}'></span><br/><br/>
+            <div id='child-${parentCount}'>
+                   
+            </div>
+            <br>
+            <br>
+            </div>
+            `);
+        // }
+    }
+
+    function increaseChild(id) {
+        $('#child-' + id).append(` 
+        <div id='${parentCount}-childMainDiv-${childCount}'>
+        <input type='text' class='form-control childForm' id='${parentCount}-childInput-${childCount}'> 
+        <span class="glyphicon glyphicon-minus removeParent" onclick=removeChildValue(${parentCount},${childCount}) id='${parentCount}-span-${childCount}'></span>&nbsp;&nbsp;&nbsp;<br/>
+        </div>
+        `)
+    }
+
+    function removeChildValue(parentId, childId) {
+        console.log(">>>>>>>>", childId);
+        $('#' + parentId + '-childMainDiv-' + childId).remove()
+    }
+</script>
+
+</html>
